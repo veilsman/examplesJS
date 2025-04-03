@@ -1,0 +1,50 @@
+<style>
+        /* Estilo del elemento arrastrable */
+        #draggable {
+            width: 150px;
+            height: 150px;
+            background-color: tomato;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            line-height: 150px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: grab;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+</style>
+<div id="draggable">Arrástrame</div>
+<script>
+        function makeDraggable(el) {
+            let posX = 0, posY = 0, mouseX = 0, mouseY = 0;
+
+            el.onmousedown = function(e) {
+                e.preventDefault();
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                document.onmouseup = stopDragging;
+                document.onmousemove = dragElement;
+            };
+
+            function dragElement(e) {
+                posX = mouseX - e.clientX;
+                posY = mouseY - e.clientY;
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                el.style.top = (el.offsetTop - posY) + "px";
+                el.style.left = (el.offsetLeft - posX) + "px";
+            }
+
+            function stopDragging() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+
+        // Hacer el div con id "draggable" arrastrable
+        makeDraggable(document.getElementById("draggable"));
+</script>
